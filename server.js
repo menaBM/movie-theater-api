@@ -7,13 +7,10 @@ app.use(express.json())
 app.use("/users", userRouter)
 app.use("/shows", showRouter)
 
-//
-//nodemon and postman testing
-//use express validator import etc
-// make supertests
 
 
-app.listen(3000, ()=>{
-    seed() //need to await?
+
+app.listen(3000, async()=>{
+    await seed()
     console.log("listening on port 3000")
 })

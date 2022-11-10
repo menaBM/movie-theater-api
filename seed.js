@@ -31,6 +31,10 @@ const seed = async () => {
     await Promise.all(ShowPromises); // The Promise.all() method takes an iterable of promises as an input, and returns a single Promise that resolves to an array of the results of the input promises.
     await Promise.all(UserPromises)
 
+    const show1 = await Show.findByPk(1)
+    const show2 = await Show.findByPk(2)
+    await (await User.findByPk(1)).addShows([show1,show2])
+
     console.log("Shows and User database info populated!")
 }
 
