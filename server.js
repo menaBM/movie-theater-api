@@ -7,7 +7,11 @@ app.use(express.json())
 app.use("/users", userRouter)
 app.use("/shows", showRouter)
 
-
+//set up all routes
+//set up validation - middle ware
+//nodemon and postman testing
+//use express validator import etc
+// make supertests
 
 
 app.listen(3000, async()=>{
