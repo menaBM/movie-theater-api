@@ -1,6 +1,7 @@
 const {Router} = require("express")
 const {Show }= require("../models/Show")
 const {body,param, validationResult} = require("express-validator")
+const checkShowId = require("../middleware/checkShowId")
 
 const showRouter = Router()
 
@@ -8,7 +9,7 @@ showRouter.get("/", async(req,res)=>{
     res.send(await Show.findAll())
 })
 
-showRouter.get("/:id", async(req,res)=>{
+showRouter.get("/:id",checkShowId, async(req,res)=>{
     res.send(await Show.findByPk(req.params.id))
 })
 
@@ -16,7 +17,7 @@ showRouter.get("/genres/:genre", async(req,res)=>{
     res.send(await Show.findAll({where:{genre: req.params.genre}}))
 })
 
-showRouter.put("/:id/watched/:rating",
+showRouter.put("/:id/watched/:rating", checkShowId,
 param("rating").notEmpty({ignore_whitespace: true}).exists().not().equals("null").not().equals("undefined"), 
 async(req,res)=>{
     const errors = validationResult(req)
@@ -29,7 +30,7 @@ async(req,res)=>{
     }
 })
 
-showRouter.put("/:id/updates",
+showRouter.put("/:id/updates", checkShowId,
 body("status").isLength({min:5, max:25}).exists(), 
 async(req,res)=>{
     const errors = validationResult(req)
@@ -42,7 +43,7 @@ async(req,res)=>{
     }
 })
 
-showRouter.delete("/:id", async(req,res)=>{
+showRouter.delete("/:id", checkShowId, async(req,res)=>{
     await (await Show.findByPk(req.params.id)).destroy()
     res.send("show deleted")
 })

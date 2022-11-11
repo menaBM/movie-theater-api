@@ -4,7 +4,7 @@
   "description": "Movie Theater Project for Express Week Day 5",
   "main": "db.js",
   "scripts": {
-    "test": "jest test.js -- --silent:false",
+    "test": "jest test.js --coverage -- --silent:false",
     "start": "nodemon server.js"
   },
   "author": "",
