@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1668180835504" clover="3.2.0">
-  <project timestamp="1668180835504" name="All files">
+<coverage generated="1668181223704" clover="3.2.0">
+  <project timestamp="1668181223704" name="All files">
     <metrics statements="109" coveredstatements="109" conditionals="14" coveredconditionals="14" methods="16" coveredmethods="16" elements="139" coveredelements="139" complexity="0" loc="109" ncloc="109" packages="4" files="12" classes="12"/>
     <package name="movie-theater-api">
       <metrics statements="32" coveredstatements="32" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
@@ -41,9 +41,9 @@
         <line num="3" count="1" type="stmt"/>
         <line num="5" count="1" type="stmt"/>
         <line num="6" count="1" type="stmt"/>
-        <line num="7" count="1" type="stmt"/>
-        <line num="8" count="1" type="stmt"/>
-        <line num="16" count="1" type="stmt"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
       </file>
     </package>
     <package name="movie-theater-api.middleware">

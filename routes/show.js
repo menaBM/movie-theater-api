@@ -36,7 +36,7 @@ async(req,res)=>{
 })
 
 showRouter.put("/:id/updates", checkShowId,
-body("status").isLength({min:5, max:25}).exists(), 
+body("status").isLength({min:5, max:25}).exists().notEmpty({ignore_whitespace: true}), 
 async(req,res)=>{
     const errors = validationResult(req)
     if (errors.isEmpty()){
