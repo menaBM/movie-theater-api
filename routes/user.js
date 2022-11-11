@@ -13,7 +13,7 @@ userRouter.get("/:id", async(req,res)=>{
 })
 
 userRouter.get("/:id/shows", async(req,res)=>{
-    res.send(await (await User.findOne({where: {id :req.params.id}})).getShows())
+    res.send(await (await User.findByPk(req.params.id)).getShows())
 })
 
 userRouter.put('/:id/shows/:num', async(req,res)=>{

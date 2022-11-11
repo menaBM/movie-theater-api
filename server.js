@@ -8,13 +8,9 @@ app.use("/users", userRouter)
 app.use("/shows", showRouter)
 
 
-//set up validation - middle ware
-//nodemon and postman testing
-//use express validator import etc
-// make supertests
+// app.listen(3000, async()=>{
+//     await seed()
+//     console.log("listening on port 3000")
+// })
 
-
-app.listen(3000, async()=>{
-    await seed()
-    console.log("listening on port 3000")
-})
+module.exports = app
