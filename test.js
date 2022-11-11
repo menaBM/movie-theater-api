@@ -50,4 +50,27 @@ describe('testing the show router', ()=>{
         expect((await request(app).get("/shows/1")).body).toEqual(expect.objectContaining({title: show.title , genre: show.genre, rating: show.rating, status: show.status}))
     })
     
+    test("the show router gets shows of a specific genre", async()=>{
+        const shows = await Show.findAll({where: {genre: "Comedy"}})
+        const res = (await request(app).get("/shows/genres/Comedy")).body
+        expect(res.length).toBe(shows.length)
+        for (let i of res){
+            expect(i).toHaveProperty("genre", "Comedy")
+        }
+    })
+
+    test("the show router updates the rating of a show", async()=>{
+        await request(app).put("/shows/4/watched/10000")
+        expect(await Show.findByPk(4)).toHaveProperty("rating", 10000)
+    })
+
+    test("the show router should update the status of a show", async()=>{
+        await request(app).put("/shows/6/updates").send({status :"canceled"})
+        expect(await Show.findByPk(6)).toHaveProperty("status", "canceled")
+    })
+
+    test("the show router can delete a show", async()=>{
+        await request(app).delete("/shows/5")
+        expect(await Show.findByPk(5)).toBe(null)
+    })
 })
