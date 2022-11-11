@@ -17,7 +17,7 @@ showRouter.get("/genres/:genre", async(req,res)=>{
 })
 
 showRouter.put("/:id/watched/:rating",
-param("rating").notEmpty({ignore_whitespace: true}).exists(),
+param("rating").notEmpty({ignore_whitespace: true}).exists().not().equals("null").not().equals("undefined"), 
 async(req,res)=>{
     const errors = validationResult(req)
     if (errors.isEmpty()){
@@ -30,10 +30,9 @@ async(req,res)=>{
 })
 
 showRouter.put("/:id/updates",
-body("status").isLength({min:5, max:25}), 
+body("status").isLength({min:5, max:25}).exists(), 
 async(req,res)=>{
     const errors = validationResult(req)
-    console.log(errors)
     if (errors.isEmpty()){
         const show = await Show.findByPk(req.params.id)
         await show.update({status: req.body.status})

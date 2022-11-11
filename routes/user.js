@@ -17,7 +17,6 @@ userRouter.get("/:id/shows", async(req,res)=>{
 })
 
 userRouter.put('/:id/shows/:num', async(req,res)=>{
-    console.log("here")
     const show = await Show.findByPk(req.params.num)
     const user = await User.findByPk(req.params.id)
     await user.addShows([show])
