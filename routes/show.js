@@ -2,6 +2,7 @@ const {Router} = require("express")
 const {Show }= require("../models/Show")
 const {body,param, validationResult} = require("express-validator")
 const checkShowId = require("../middleware/checkShowId")
+const checkGenre = require("../middleware/checkGenre")
 
 const showRouter = Router()
 
@@ -13,7 +14,7 @@ showRouter.get("/:id",checkShowId, async(req,res)=>{
     res.send(await Show.findByPk(req.params.id))
 })
 
-showRouter.get("/genres/:genre", async(req,res)=>{
+showRouter.get("/genres/:genre", checkGenre, async(req,res)=>{
     res.send(await Show.findAll({where:{genre: req.params.genre}}))
 })
 
@@ -22,9 +23,13 @@ param("rating").notEmpty({ignore_whitespace: true}).exists().not().equals("null"
 async(req,res)=>{
     const errors = validationResult(req)
     if (errors.isEmpty()){
-        res.send(await (await Show.findByPk(req.params.id)).update({
-            rating : req.params.rating 
-        }))
+        if (req.params.rating >= 0 && req.params.rating <= 10){
+            res.send(await (await Show.findByPk(req.params.id)).update({
+                rating : req.params.rating 
+            }))
+        }else{
+            res.status(400).send("rating must be between 0 and 10")
+        }
     }else{
         res.status(400).send("cannot have empty parameters")
     }

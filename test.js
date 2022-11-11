@@ -84,21 +84,29 @@ describe('testing the show router', ()=>{
         })
 
     })
+
+    describe("the show router gets shows of a specific genre", ()=>{
     
-    test("the show router gets shows of a specific genre", async()=>{
-        const shows = await Show.findAll({where: {genre: "Comedy"}})
-        const res = (await request(app).get("/shows/genres/Comedy")).body
-        expect(res.length).toBe(shows.length)
-        for (let i of res){
-            expect(i).toHaveProperty("genre", "Comedy")
-        }
+        test("with a valid genre", async()=>{
+            const shows = await Show.findAll({where: {genre: "Comedy"}})
+            const res = (await request(app).get("/shows/genres/Comedy")).body
+            expect(res.length).toBe(shows.length)
+            for (let i of res){
+                expect(i).toHaveProperty("genre", "Comedy")
+            }
+        })
+
+        test("with an invalid genre", async()=>{
+            expect((await request(app).get("/shows/genres/sports")).text).toBe("invalid genre")
+        })
+
     })
 
     describe("the show router updates the rating of a show", ()=>{
 
         test("with valid inputs", async()=>{
-            await request(app).put("/shows/4/watched/10000")
-            expect(await Show.findByPk(4)).toHaveProperty("rating", 10000)
+            await request(app).put("/shows/4/watched/10")
+            expect(await Show.findByPk(4)).toHaveProperty("rating", 10)
         })
 
         test("the rating field cannot be empty", async()=>{
@@ -106,7 +114,11 @@ describe('testing the show router', ()=>{
         })
 
         test("with an invalid show id", async()=>{
-            expect((await request(app).get("/shows/40")).text).toBe("invalid show id")
+            expect((await request(app).put("/shows/40/watched/2")).text).toBe("invalid show id")
+        })
+
+        test("the rating must be between 0 and 10", async()=>{
+            expect((await request(app).put("/shows/4/watched/100000")).text).toBe("rating must be between 0 and 10")
         })
 
     })
